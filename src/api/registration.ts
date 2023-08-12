@@ -14,6 +14,9 @@ export const authenticationApi = api.injectEndpoints({
   overrideExisting: false,
 })
 
+//TODO: define endpoint registration-summary
+// /api/registration/school-year/${schoolYearId}/by-receiver
+
 export const {
-  useGetRegistrationsQuery
+  useGetRegistrationsQuery,
 } = authenticationApi
