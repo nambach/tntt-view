@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     const currentTime = new Date();
     const dateTest = new Date("2023-08-12T01:11:10+07:00");
-    const isTest = true;
+    const isTest = false;
     const hours = (isTest ? dateTest : currentTime)
       .getHours()
       .toString()
