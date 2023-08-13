@@ -3,6 +3,7 @@ import "./App.css";
 import Search from "./pages/Search";
 import BlockerModal from "./components/Modal/BlockerModal";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Registration from "./pages/Registration";
 
 function App() {
   const [isBlocked, setIsBlocked] = useState(false);
@@ -27,7 +28,7 @@ function App() {
     },
     {
       path: "/registration-summary",
-      element: <div> registration-summary </div>,
+      element: <Registration isBlocked={isBlocked} />,
     },
   ]);
 
