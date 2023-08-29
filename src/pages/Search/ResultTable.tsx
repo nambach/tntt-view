@@ -1,5 +1,17 @@
-import {Chip, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material';
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material';
+import {CourseChip} from '../../components/CourseChip';
 import {RegistrationItem} from '../../models';
+
+const renderRegistrationDetail = (item: RegistrationItem) => {
+  const {registrationId, currentYearCourse} = item
+
+  if (currentYearCourse!=='-') {
+    return <CourseChip courseName={currentYearCourse}/>
+  }
+
+  return !!registrationId ?
+  <span style={{color: 'green'}}>Đã ghi danh</span>:<span style={{color: 'red'}}>Chưa ghi danh</span>
+}
 
 export const ResultTable = ({students}: { students: RegistrationItem[] }) => {
   return <TableContainer component={Paper}>
@@ -27,8 +39,7 @@ export const ResultTable = ({students}: { students: RegistrationItem[] }) => {
           </TableCell>
           <TableCell>{student.birthYear}</TableCell>
           <TableCell>{student.lastYearCourse}</TableCell>
-          <TableCell>{student.registrationId ?
-          <Chip label="Đã ghi danh" color="success"/>:<Chip label="Chưa ghi danh" color="error"/>}</TableCell>
+          <TableCell>{renderRegistrationDetail(student)}</TableCell>
         </TableRow>
         ))}
       </TableBody>

@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useState } from "react";
-import { useGetRegistrationsQuery } from "../../api/registration";
+import {registrationApi, useGetRegistrationsQuery} from "../../api/registration";
 import { useLoader } from "../../components/Loader";
 import { ResultTable } from "./ResultTable";
 import styles from "./Search.desktop.module.css";
@@ -25,7 +25,7 @@ const Search = ({ isBlocked }: SearchProps) => {
 
   const handleSearch = () => {
     if (isBlocked) return;
-    setSearch(name);
+    setSearch(name?.trim());
   };
 
   return (

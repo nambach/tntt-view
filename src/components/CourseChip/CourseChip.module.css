@@ -1,0 +1,21 @@
+.chip {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 100px;
+  white-space: nowrap;
+  font-weight: bold;
+}
+.chien {
+  background-color: lightpink;
+}
+.au {
+  color: whitesmoke;
+  background-color: green;
+}
+.thieu {
+  color: whitesmoke;
+  background-color: mediumblue;
+}
+.nghia {
+  background-color: yellow;
+}
