@@ -8,8 +8,9 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useState } from "react";
-import {registrationApi, useGetRegistrationsQuery} from "../../api/registration";
+import {useGetRegistrationsQuery} from "../../api/registration";
 import { useLoader } from "../../components/Loader";
+import {normalizeSpecialVietnameseText} from '../../utils/text-utils';
 import { ResultTable } from "./ResultTable";
 import styles from "./Search.desktop.module.css";
 
@@ -24,8 +25,8 @@ const Search = ({ isBlocked }: SearchProps) => {
   const { Loader } = useLoader();
 
   const handleSearch = () => {
-    if (isBlocked) return;
-    setSearch(name?.trim());
+    if (isBlocked || name.length <= 2) return;
+    setSearch(normalizeSpecialVietnameseText(name?.trim()));
   };
 
   return (
