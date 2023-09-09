@@ -50,7 +50,7 @@ export const TeachersDialog = ({course, isOpen, close, isFetching, teachers = []
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} autoFocus>
-            Đóng
+            <b>Đóng</b>
           </Button>
         </DialogActions>
       </>
