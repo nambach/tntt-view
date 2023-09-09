@@ -8,9 +8,10 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useState } from "react";
-import {useGetRegistrationsQuery} from "../../api/registration";
+import {useGetAllCoursesQuery,  useLazyGetRegistrationsQuery} from "../../api/registration";
 import { useLoader } from "../../components/Loader";
 import {normalizeSpecialVietnameseText} from '../../utils/text-utils';
+import {CoursesContext} from './CoursesContext';
 import { ResultTable } from "./ResultTable";
 import styles from "./Search.desktop.module.css";
 
@@ -21,17 +22,20 @@ interface SearchProps {
 const Search = ({ isBlocked }: SearchProps) => {
   const [name, setName] = useState("");
   const [search, setSearch] = useState("");
-  const { data, isFetching } = useGetRegistrationsQuery({ search });
+  const [fetchStudents, {data: students, isFetching: isFetchingStudents}] = useLazyGetRegistrationsQuery();
+  const { data: courses, isFetching: isFetchingCourses } = useGetAllCoursesQuery();
   const { Loader } = useLoader();
 
   const handleSearch = () => {
     if (isBlocked || name.length <= 2) return;
-    setSearch(normalizeSpecialVietnameseText(name?.trim()));
+    const search = normalizeSpecialVietnameseText(name?.trim())
+    setSearch(search);
+    fetchStudents({search})
   };
 
   return (
-    <>
-      <Loader loading={isFetching} />
+    <CoursesContext.Provider value={courses || []}>
+      <Loader loading={isFetchingStudents || isFetchingCourses} />
       <Grid container spacing={2}>
         <Grid item xs={0} sm={2}></Grid>
         <Grid item xs={12} sm={8}>
@@ -65,9 +69,9 @@ const Search = ({ isBlocked }: SearchProps) => {
                 </Alert>
               </Stack>
             </Stack>
-            {data?.length ? (
-              <ResultTable students={data} />
-            ) : search && !isFetching ? (
+            {students?.length ? (
+              <ResultTable students={students} />
+            ) : search && !isFetchingStudents ? (
               <div>Không tìm thấy đoàn sinh.</div>
             ) : (
               <></>
@@ -76,7 +80,7 @@ const Search = ({ isBlocked }: SearchProps) => {
         </Grid>
         <Grid item xs={0} sm={2}></Grid>
       </Grid>
-    </>
+    </CoursesContext.Provider>
   );
 };
 

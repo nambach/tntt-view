@@ -1,4 +1,11 @@
-import {RegistrationByReceiver, RegistrationItem, RegistrationReq, RegistrationSummaryReq} from '../models'
+import {
+  Course,
+  RegistrationByReceiver,
+  RegistrationItem,
+  RegistrationReq,
+  RegistrationSummaryReq,
+  Teacher
+} from '../models'
 import {api} from './baseRtkqApi'
 
 export const registrationApi = api.injectEndpoints({
@@ -10,6 +17,19 @@ export const registrationApi = api.injectEndpoints({
         params: queryArg
       }),
     }),
+    getAllCourses: build.query<Course[], void>({
+      query: () => ({
+        url: `/api/course/all/this-year`,
+        method: 'GET',
+      })
+    }),
+    getCourseTeachers: build.query<Teacher[], { courseId: number }>({
+      query: (params) => ({
+        url: `/api/course/${params.courseId}/enrollment?entities=teachers`,
+        method: 'GET'
+      }),
+      transformResponse: (resp: { teachers: Teacher[] }) => resp.teachers
+    })
   }),
   overrideExisting: false,
 })
@@ -27,7 +47,9 @@ export const registrationSummaryApi = api.injectEndpoints({
 })
 
 export const {
-  useGetRegistrationsQuery,
+  useGetAllCoursesQuery,
+  useLazyGetCourseTeachersQuery,
+  useLazyGetRegistrationsQuery ,
 } = registrationApi
 
 export const {
