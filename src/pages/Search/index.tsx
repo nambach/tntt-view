@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import {useGetAllCoursesQuery,  useLazyGetRegistrationsQuery} from "../../api/registration";
 import { useLoader } from "../../components/Loader";
-import {normalizeSpecialVietnameseText} from '../../utils/text-utils';
+import { normalizeSpecialVietnameseText, trimSpace } from '../../utils/text-utils';
 import {CoursesContext} from './CoursesContext';
 import { ResultTable } from "./ResultTable";
 import styles from "./Search.desktop.module.css";
@@ -22,13 +22,19 @@ interface SearchProps {
 const Search = ({ isBlocked }: SearchProps) => {
   const [name, setName] = useState("");
   const [search, setSearch] = useState("");
+  const [touched, setTouched] = useState(false);
   const [fetchStudents, {data: students, isFetching: isFetchingStudents}] = useLazyGetRegistrationsQuery();
   const { data: courses, isFetching: isFetchingCourses } = useGetAllCoursesQuery();
   const { Loader } = useLoader();
 
+  const shouldShowError = () => {
+    return touched && name.length <= 2
+  }
+
   const handleSearch = () => {
+    setTouched(true)
     if (isBlocked || name.length <= 2) return;
-    const search = normalizeSpecialVietnameseText(name?.trim())
+    const search = normalizeSpecialVietnameseText(trimSpace(name))
     setSearch(search);
     fetchStudents({search})
   };
@@ -59,6 +65,7 @@ const Search = ({ isBlocked }: SearchProps) => {
                     </InputAdornment>
                   ),
                 }}
+                helperText={shouldShowError() ? 'Vui lòng nhập từ 3 kí tự trở lên' : undefined}
               />
               <Button variant="contained" onClick={() => handleSearch()}>
                 Tìm

@@ -59,7 +59,7 @@ export default function BlockerModal({ isShowModal }: BlockerModalProps) {
             </Typography>
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
               Hiện tại hệ thống đang được bảo trì.<br></br>
-              Xin quý phụ huynh quay lại sau <strong>6h sáng</strong>.
+              Xin quý phụ huynh quay lại vào lúc <strong>6h sáng</strong>.
             </Typography>
           </Box>
         </Fade>

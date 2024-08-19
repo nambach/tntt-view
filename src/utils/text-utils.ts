@@ -20,3 +20,6 @@ export const normalizeSpecialVietnameseText = (text: string) => {
   return text
 }
 
+export const trimSpace = (text: string | undefined) => {
+  return text ? text.split(' ').filter(s => s !== '').join(' ') : ''
+}
