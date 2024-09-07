@@ -1,4 +1,4 @@
-import {CircularProgress, List, ListItem, ListItemText} from '@mui/material';
+import {CircularProgress} from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -8,7 +8,7 @@ import {useTheme} from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import * as React from 'react';
 import {CourseChip} from '../../../components/CourseChip';
-import {Course, Teacher} from '../../../models';
+import {Course, RegistrationItem, Teacher} from '../../../models';
 import {CourseChatLink} from './CourseChatLink';
 
 interface Props {
@@ -17,9 +17,10 @@ interface Props {
   close: () => void
   isFetching: boolean
   teachers: Teacher[]
+  student?: RegistrationItem
 }
 
-export const TeachersDialog = ({course, isOpen, close, isFetching, teachers = []}: Props) => {
+export const TeachersDialog = ({course, isOpen, close, isFetching, teachers = [], student}: Props) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -40,6 +41,9 @@ export const TeachersDialog = ({course, isOpen, close, isFetching, teachers = []
         {course?.name ? <CourseChip courseName={course.name}/>:null}
       </DialogTitle>
         <DialogContent>
+          <b>Đoàn sinh</b>
+          <p>{student?.canonicalSaintName} {student?.fullName} ({student?.birthYear})</p>
+          <br/>
           <b>Giáo lý viên</b>
           {teachers.length === 0 ? <p>Danh sách GLV sẽ được cập nhật sau.</p> : null}
           <ol style={{paddingLeft: '20px'}}>
@@ -50,8 +54,8 @@ export const TeachersDialog = ({course, isOpen, close, isFetching, teachers = []
           </ol>
 
           <br/>
-          <b>Liên lạc</b>
-          {/*<CourseChatLink courseName={course?.name}/>*/}
+
+          <CourseChatLink courseName={course?.name}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} autoFocus>

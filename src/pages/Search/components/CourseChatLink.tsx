@@ -1,4 +1,5 @@
 import {Link} from '@mui/material';
+import * as React from 'react';
 const data = `Chiên 1;https://zalo.me/g/qayakm273
 Chiên 2A;https://zalo.me/g/tkhnsn448
 Chiên 2B;https://zalo.me/g/mjbwqa142
@@ -42,10 +43,13 @@ const readCsv = () => {
 let currentYearUrl: Record<string, string> = readCsv()
 
 export const CourseChatLink = ({courseName}:{courseName: string | undefined}) => {
-  console.log('a')
   if (courseName == null) {
     return null
   }
   const url = currentYearUrl[courseName]
-  return url ? <div>Nhóm Zalo: <Link href={url} target='_blank'>{url}</Link></div> : null
+  return url ? <>
+    <b>Liên lạc</b>
+    <p>Nhóm Zalo <b>{courseName}</b> : <Link href={url} target='_blank'>Nhấn để tham gia</Link></p>
+    </>
+  :null
 }

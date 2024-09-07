@@ -1,4 +1,4 @@
-import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material';
+import {Button, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material';
 import {CourseChip} from '../../components/CourseChip';
 import {RegistrationItem} from '../../models';
 import {useTeachersDialog} from './components/useTeachersDialog';
@@ -27,7 +27,6 @@ export const ResultTable = ({students}: { students: RegistrationItem[] }) => {
             <TableCell>Năm sinh</TableCell>
             <TableCell>Lớp cũ</TableCell>
             <TableCell>Trạng thái</TableCell>
-            <TableCell>Hành động</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -40,15 +39,13 @@ export const ResultTable = ({students}: { students: RegistrationItem[] }) => {
               {student.canonicalSaintName}
             </TableCell>
             <TableCell component="th" scope="row">
-              {student.fullName}
+              {student.currentYearCourse!=='-'
+              ? <Link component='button' style={{textAlign:'left'}} onClick={() => showModal(student)}>{student.fullName}</Link>
+              : student.fullName}
             </TableCell>
             <TableCell>{student.birthYear}</TableCell>
             <TableCell>{student.lastYearCourse}</TableCell>
             <TableCell>{renderRegistrationDetail(student)}</TableCell>
-            <TableCell>{student.currentYearCourse!=='-' ?
-            <Button variant="text" onClick={() => showModal(student.currentYearCourse)}>
-              Chi tiết
-            </Button>:undefined}</TableCell>
           </TableRow>
           ))}
         </TableBody>
