@@ -51,7 +51,7 @@ export const TeachersDialog = ({course, isOpen, close, isFetching, teachers = []
 
           <br/>
           <b>Liên lạc</b>
-          <CourseChatLink courseName={course?.name}/>
+          {/*<CourseChatLink courseName={course?.name}/>*/}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} autoFocus>
