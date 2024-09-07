@@ -9,6 +9,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import * as React from 'react';
 import {CourseChip} from '../../../components/CourseChip';
 import {Course, Teacher} from '../../../models';
+import {CourseChatLink} from './CourseChatLink';
 
 interface Props {
   course?: Course
@@ -39,14 +40,18 @@ export const TeachersDialog = ({course, isOpen, close, isFetching, teachers = []
         {course?.name ? <CourseChip courseName={course.name}/>:null}
       </DialogTitle>
         <DialogContent>
-          <List>
-            {teachers.map(teacher => <ListItem key={teacher.id}>
-              <ListItemText>
-                {teacher.teacherTitle} {teacher.canonicalSaintName} <b>{teacher.fullName}</b> {teacher.phone ? <> - <a
-              href={`tel:${teacher.phone}`}>{teacher.phone}</a></>:null}
-              </ListItemText>
-            </ListItem>)}
-          </List>
+          <b>Giáo lý viên</b>
+          {teachers.length === 0 ? <p>Danh sách GLV sẽ được cập nhật sau.</p> : null}
+          <ol style={{paddingLeft: '20px'}}>
+            {teachers.map(teacher => <li key={teacher.id}>
+              {teacher.teacherTitle} {teacher.canonicalSaintName} <b>{teacher.fullName}</b> {teacher.phone ? <> - <a
+            href={`tel:${teacher.phone}`}>{teacher.phone}</a></>:null}
+            </li>)}
+          </ol>
+
+          <br/>
+          <b>Liên lạc</b>
+          <CourseChatLink courseName={course?.name}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} autoFocus>

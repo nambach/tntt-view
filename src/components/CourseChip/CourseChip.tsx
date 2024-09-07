@@ -18,6 +18,9 @@ const getStyle = (courseName: string) => {
   if (lowerName.includes('nghĩa')) {
     return styles.nghia
   }
+  if (lowerName.includes('hiệp')) {
+    return styles.hiep
+  }
 }
 
 export const CourseChip = ({courseName}: Props) => {
