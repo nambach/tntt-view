@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { RegistrationByReceiver } from "../../models";
 import { localizeDate } from "../../utils/date-util";
 
-export const ResultTable = ({ data }: { data: RegistrationByReceiver }) => {
+export const ResultTable = ({ data, dates }: { data: RegistrationByReceiver, dates: string[] }) => {
   useEffect(() => {}, [data]);
 
   return (
@@ -28,20 +28,20 @@ export const ResultTable = ({ data }: { data: RegistrationByReceiver }) => {
 
           {data.receivers.map((receiver, index) => (
             <>
-              {Object.keys(receiver.data).map((date, dateIndex) => (
-                <TableRow key={`${index}-${dateIndex}`}>
-                  {dateIndex === 0 && (
-                    <TableCell
-                      rowSpan={Object.keys(receiver.data).length}
-                      scope="row"
-                    >
-                      {receiver.name}
-                    </TableCell>
-                  )}
+              {dates.filter(date => receiver.data[date] != null).map((date, index) => (
+                  <TableRow key={`${receiver.name}-${date}`}>
+                    {index === 0 && (
+                        <TableCell
+                            rowSpan={Object.keys(receiver.data).length}
+                            scope="row"
+                        >
+                          {receiver.name}
+                        </TableCell>
+                    )}
 
-                  <TableCell scope="row">{localizeDate(date)}</TableCell>
-                  <TableCell>{receiver.data[date]}</TableCell>
-                </TableRow>
+                    <TableCell scope="row">{localizeDate(date)}</TableCell>
+                    <TableCell>{receiver.data[date]}</TableCell>
+                  </TableRow>
               ))}
             </>
           ))}

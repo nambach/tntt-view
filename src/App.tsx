@@ -27,7 +27,7 @@ function App() {
       element: <Search isBlocked={isBlocked} />,
     },
     {
-      path: "/registration-summary",
+      path: "/registration-summary/:yearId",
       element: <Registration isBlocked={isBlocked} />,
     },
   ]);
