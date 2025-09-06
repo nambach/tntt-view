@@ -1,5 +1,9 @@
 import {Link} from '@mui/material';
+import zalo from './zalo.json'
 import * as React from 'react';
+
+const currentYear = '2025-2026'
+
 const data = `Chiên 1;https://zalo.me/g/qayakm273
 Chiên 2A;https://zalo.me/g/tkhnsn448
 Chiên 2B;https://zalo.me/g/mjbwqa142
@@ -33,6 +37,8 @@ Nghĩa 3;https://zalo.me/g/wmnbsc722`
 
 const readCsv = () => {
   const result: Record<string, string> = {}
+
+
   data.split('\n').forEach((line) => {
     const [courseName, url] = line.split(';')
     result[courseName] = url
@@ -40,7 +46,7 @@ const readCsv = () => {
   return result
 }
 
-let currentYearUrl: Record<string, string> = readCsv()
+let currentYearUrl: Record<string, string> = zalo[currentYear]
 
 export const CourseChatLink = ({courseName}:{courseName: string | undefined}) => {
   if (courseName == null) {

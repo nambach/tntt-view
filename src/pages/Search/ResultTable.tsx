@@ -3,7 +3,7 @@ import {CourseChip} from '../../components/CourseChip';
 import {RegistrationItem} from '../../models';
 import {useTeachersDialog} from './components/useTeachersDialog';
 
-const renderRegistrationDetail = (item: RegistrationItem) => {
+export const renderRegistrationDetail = (item: RegistrationItem) => {
   const {registrationId, currentYearCourse} = item
 
   if (currentYearCourse!=='-') {

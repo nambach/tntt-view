@@ -7,12 +7,14 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
 import {useGetAllCoursesQuery,  useLazyGetRegistrationsQuery} from "../../api/registration";
 import { useLoader } from "../../components/Loader";
 import { normalizeSpecialVietnameseText, trimSpace } from '../../utils/text-utils';
 import {CoursesContext} from './CoursesContext';
 import { ResultTable } from "./ResultTable";
+import { StudentList } from "./ResultList";
 import styles from "./Search.desktop.module.css";
 
 interface SearchProps {
@@ -26,6 +28,7 @@ const Search = ({ isBlocked }: SearchProps) => {
   const [fetchStudents, {data: students, isFetching: isFetchingStudents}] = useLazyGetRegistrationsQuery();
   const { data: courses, isFetching: isFetchingCourses } = useGetAllCoursesQuery();
   const { Loader } = useLoader();
+  const isMobile = useMediaQuery("(max-width:768px)");
 
   const shouldShowError = () => {
     return touched && name.length <= 2
@@ -77,7 +80,9 @@ const Search = ({ isBlocked }: SearchProps) => {
               </Stack>
             </Stack>
             {students?.length ? (
-              <ResultTable students={students} />
+                isMobile ?
+                    <StudentList students={students}/> :
+                    <ResultTable students={students}/>
             ) : search && !isFetchingStudents ? (
               <div>Không tìm thấy đoàn sinh.</div>
             ) : (
